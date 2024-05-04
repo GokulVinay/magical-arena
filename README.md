@@ -1,297 +1,65 @@
-# Covid-19 India Portal
+# Magicl Arena
+# Simple Turn-Based Combat Game
 
-Given two files `app.js` and a database file `covid19IndiaPortal.db` consisting of three tables `state`, `district` and `user`.
+This is a simple JavaScript program that simulates a turn-based combat game between two players. Players take turns attacking each other until one of them's health drops to 0 or below.
 
-Write APIs to perform operations on the tables `state`, `district` only after authentication of the user.
+## Requirements
 
-The columns of the tables are given below,
+- Node.js installed on your system.
 
-**State Table**
+## How to Run
 
-| Columns    | Type    |
-| ---------- | ------- |
-| state_id   | INTEGER |
-| state_name | TEXT    |
-| population | INTEGER |
+1. Clone this repository or download the files to your local machine.
+2. Open a terminal or command prompt and navigate to the directory containing the files.
+3. Run the following command to install dependencies:
+4. Run the main JavaScript file using Node.js: app.js
+5. Follow the prompts to enter the names and attributes of the two players.
+6. The game will then simulate the combat and display the progress and outcome in the console.
 
-**District Table**
+## Code Structure
 
-| Columns       | Type    |
-| ------------- | ------- |
-| district_id   | INTEGER |
-| district_name | TEXT    |
-| state_id      | INTEGER |
-| cases         | INTEGER |
-| cured         | INTEGER |
-| active        | INTEGER |
-| deaths        | INTEGER |
+- `app.js`: Contains the main code for the game.
+- `README.md`: This file, containing instructions and information about the code.
 
-You can use your previous code if required.
+## Gameplay
 
-#### Sample Valid User Credentials
+- Players take turns attacking each other.
+- Attack and defense rolls are simulated using six-sided dice.
+- Damage is calculated based on the player's attack and the opponent's defense.
+- The game ends when one player's health drops to 0 or below.
 
-```
-{
-  "username": "christopher_phillips",
-  "password": "christy@123"
-}
-```
+## Example Output
 
-### API 1
+Enter name for Player 1: Gokul
+Enter health for Player 1: 100
+Enter strength for Player 1: 50
+Enter attack for Player 1: 60
+Enter name for Player 2: Vinay
+Enter health for Player 2: 120
+Enter strength for Player 2: 50
+Enter attack for Player 2: 69
+Gokul rolled a 1 for attack.
+Vinay rolled a 4 for defense.
+Vinay took 0 damage.
+Vinay's health: 120
 
-#### Path: `/login/`
+Vinay rolled a 5 for attack.
+Gokul rolled a 1 for defense.
+Gokul took 295 damage.
+Gokul's health: -195
 
-#### Method: `POST`
+Gokul has been defeated!
 
-**Request**
+![image](https://github.com/GokulVinay/magical-arena/assets/114005089/7ddf1663-ff5e-4404-9c48-02263c6cb818)
 
-```
-{
-  "username": "christopher_phillips",
-  "password": "christy@123"
-}
-```
 
-- **Scenario 1**
 
-  - **Description**:
 
-    If an unregistered user tries to login
 
-  - **Response**
-    - **Status code**
-      ```
-      400
-      ```
-    - **Body**
-      ```
-      Invalid user
-      ```
+## Author
 
-- **Scenario 2**
+Gokul Vinayagam
 
-  - **Description**:
 
-    If the user provides an incorrect password
 
-  - **Response**
-    - **Status code**
-      ```
-      400
-      ```
-    - **Body**
-      ```
-      Invalid password
-      ```
 
-- **Scenario 3**
-
-  - **Description**:
-
-    Successful login of the user
-
-  - **Response**
-
-    Return the JWT Token
-
-    ```
-    {
-      "jwtToken": "ak2284ns8Di32......"
-    }
-    ```
-
-### Authentication with Token
-
-- **Scenario 1**
-
-  - **Description**:
-
-    If the token is not provided by the user or an invalid token
-
-  - **Response**
-    - **Status code**
-      ```
-      401
-      ```
-    - **Body**
-      ```
-      Invalid JWT Token
-      ```
-
-- **Scenario 2**
-  After successful verification of token proceed to next middleware or handler
-
-### API 2
-
-#### Path: `/states/`
-
-#### Method: `GET`
-
-#### Description:
-
-Returns a list of all states in the state table
-
-#### Response
-
-```
-[
-  {
-    "stateId": 1,
-    "stateName": "Andaman and Nicobar Islands",
-    "population": 380581
-  },
-
-  ...
-]
-```
-
-### API 3
-
-#### Path: `/states/:stateId/`
-
-#### Method: `GET`
-
-#### Description:
-
-Returns a state based on the state ID
-
-#### Response
-
-```
-{
-  "stateId": 8,
-  "stateName": "Delhi",
-  "population": 16787941
-}
-```
-
-### API 4
-
-#### Path: `/districts/`
-
-#### Method: `POST`
-
-#### Description:
-
-Create a district in the district table, `district_id` is auto-incremented
-
-#### Request
-
-```
-{
-  "districtName": "Bagalkot",
-  "stateId": 3,
-  "cases": 2323,
-  "cured": 2000,
-  "active": 315,
-  "deaths": 8
-}
-```
-
-#### Response
-
-```
-District Successfully Added
-```
-
-### API 5
-
-#### Path: `/districts/:districtId/`
-
-#### Method: `GET`
-
-#### Description:
-
-Returns a district based on the district ID
-
-#### Response
-
-```
-{
-  "districtId": 322,
-  "districtName": "Palakkad",
-  "stateId": 17,
-  "cases": 61558,
-  "cured": 59276,
-  "active": 2095,
-  "deaths": 177
-}
-```
-
-### API 6
-
-#### Path: `/districts/:districtId/`
-
-#### Method: `DELETE`
-
-#### Description:
-
-Deletes a district from the district table based on the district ID
-
-#### Response
-
-```
-District Removed
-
-```
-
-### API 7
-
-#### Path: `/districts/:districtId/`
-
-#### Method: `PUT`
-
-#### Description:
-
-Updates the details of a specific district based on the district ID
-
-#### Request
-
-```
-{
-  "districtName": "Nadia",
-  "stateId": 3,
-  "cases": 9628,
-  "cured": 6524,
-  "active": 3000,
-  "deaths": 104
-}
-```
-
-#### Response
-
-```
-
-District Details Updated
-
-```
-
-### API 8
-
-#### Path: `/states/:stateId/stats/`
-
-#### Method: `GET`
-
-#### Description:
-
-Returns the statistics of total cases, cured, active, deaths of a specific state based on state ID
-
-#### Response
-
-```
-{
-  "totalCases": 724355,
-  "totalCured": 615324,
-  "totalActive": 99254,
-  "totalDeaths": 9777
-}
-
-```
-
-<br/>
-
-Use `npm install` to install the packages.
-
-**Export the express instance using the default export syntax.**
-
-**Use Common JS module syntax.**
